@@ -1,0 +1,6 @@
+[submodule "roles/--force"]
+	path = roles/--force
+	url = https://github.com/DanielMueller1309/proxmox_create_vms
+[submodule "roles/proxmox_create_vms"]
+	path = roles/proxmox_create_vms
+	url = https://github.com/DanielMueller1309/proxmox_create_vms
