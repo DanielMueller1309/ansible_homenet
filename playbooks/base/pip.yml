@@ -1,0 +1,4 @@
+---
+  - hosts: all
+    roles:
+      - { role: geerlingguy.pip, tags: "pip", become: true }

@@ -7,3 +7,12 @@
 [submodule "roles/geerlingguy.pip"]
 	path = roles/geerlingguy.pip
 	url = https://github.com/geerlingguy/ansible-role-pip
+[submodule "roles/geerlingguy.ansible"]
+	path = roles/geerlingguy.ansible
+	url = https://github.com/geerlingguy/ansible-role-ansible
+[submodule "roles/robertdebock.bootstrap"]
+	path = roles/robertdebock.bootstrap
+	url = https://github.com/robertdebock/ansible-role-bootstrap
+[submodule "roles/ryandaniels.create-users"]
+	path = roles/ryandaniels.create-users
+	url = https://github.com/ryandaniels/ansible-role-create-users
