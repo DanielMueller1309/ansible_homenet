@@ -16,3 +16,6 @@
 [submodule "roles/ryandaniels.create-users"]
 	path = roles/ryandaniels.create-users
 	url = https://github.com/ryandaniels/ansible-role-create-users
+[submodule "roles/philippwaller.bootstrap"]
+	path = roles/philippwaller.bootstrap
+	url = https://github.com/philippwaller/ansible-role-bootstrap/
