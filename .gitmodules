@@ -19,3 +19,6 @@
 [submodule "roles/philippwaller.bootstrap"]
 	path = roles/philippwaller.bootstrap
 	url = https://github.com/philippwaller/ansible-role-bootstrap/
+[submodule "roles/DanielMueller1309.dotfiles_multiuser"]
+	path = roles/DanielMueller1309.dotfiles_multiuser
+	url = https://github.com/DanielMueller1309/ansible-role-dotfiles_multiuser
