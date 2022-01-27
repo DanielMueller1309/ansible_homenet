@@ -1,0 +1,17 @@
+---
+  all:
+    children:
+      proxmox:
+        hosts:
+          pve:
+            ansible_host: "192.168.178.10"
+      ubuntu:
+        hosts:
+          ansible:
+            ansible_host: "192.168.178.17"
+          pihole:
+            ansible_host: "192.168.178.15"
+          pivpn:
+            ansible_host: "192.168.178.16"
+          #testserver:
+            #ansible_host: "192.168.122.166"
