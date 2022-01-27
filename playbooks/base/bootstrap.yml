@@ -10,7 +10,8 @@
           state: absent
         when: "'proxmox' in group_names"
     roles:
-      - { role: robertdebock.bootstrap, tags: "bootstrap", become: yes}
+      - { role: dp_ausb_md_roles.robertdebock.bootstrap
+, tags: "bootstrap", become: yes}
       - { role: ryandaniels.create-users, tags: "user", become: yes}
     vars:
       ### reobertdebock.bootstrap
