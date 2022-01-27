@@ -51,3 +51,28 @@ users:
     servers:
       - proxmox
       - ubuntu
+
+dotfile_user:
+  - username: user
+    dotfiles_repo: "https://github.com/DanielMueller1309/dotfiles.git"
+    dotfiles_repo_version: master
+    dotfiles_repo_accept_hostkey: false
+    dotfiles_repo_local_destination: "/home/user/dotfiles"
+    dotfiles_home: "/home/user"
+    dotfiles_files:
+      - .bashrc
+      - .tmux.conf
+      - .gitignore
+      - .vimrc
+
+  - username: root
+    dotfiles_repo: "https://github.com/DanielMueller1309/dotfiles.git"
+    dotfiles_repo_version: master
+    dotfiles_repo_accept_hostkey: false
+    dotfiles_repo_local_destination: "/root/dotfiles"
+    dotfiles_home: "/root"
+    dotfiles_files:
+      - .bashrc
+      - .tmux.conf
+      - .gitignore
+      - .vimrc
