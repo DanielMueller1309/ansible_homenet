@@ -1,0 +1,5 @@
+---
+  - hosts: all
+    become: yes
+    roles:
+      - { role: DanielMueller1309.dotfiles_multiuser, tags: dotfiles, become: yes }
