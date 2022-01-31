@@ -22,3 +22,6 @@
 [submodule "roles/DanielMueller1309.dotfiles_multiuser"]
 	path = roles/DanielMueller1309.dotfiles_multiuser
 	url = https://github.com/DanielMueller1309/ansible-role-dotfiles_multiuser
+[submodule "roles/DanielMueller1309.pihole"]
+	path = roles/DanielMueller1309.pihole
+	url = https://github.com/DanielMueller1309/ansible-role-pihole
