@@ -26,6 +26,9 @@ keepass_psw: !vault |
 #geerlingguy.ansible
 ansible_install_method: pip
 
+#geerlingguy.pip
+pip_install_packages:
+  - bpytop
 #ryandaniels.create-users
 users:
   - username: root
