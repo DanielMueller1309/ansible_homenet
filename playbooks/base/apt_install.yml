@@ -1,0 +1,4 @@
+---
+  - hosts: all
+    roles:
+      - { role: mgrote.apt_install_packages, tags: "apt", become: true }

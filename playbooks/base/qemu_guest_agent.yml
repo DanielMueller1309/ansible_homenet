@@ -1,0 +1,4 @@
+---
+  - hosts: ubuntu
+    roles:
+      - { role: mgrote.qemu_guest_agent, tags: "qemu_gu", become: true }
