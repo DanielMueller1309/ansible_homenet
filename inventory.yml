@@ -6,12 +6,20 @@
           pve:
             ansible_host: "192.168.178.10"
       ubuntu:
-        hosts:
-          ansible:
-            ansible_host: "192.168.178.17"
-          pihole:
-            ansible_host: "192.168.178.15"
-          pivpn:
-            ansible_host: "192.168.178.16"
-          #testserver:
-            #ansible_host: "192.168.122.166"
+        children:
+            pve_create_vm:
+              hosts:
+                ansible:
+                  ansible_host: "192.168.178.17"
+                pihole:
+                  ansible_host: "192.168.178.15"
+                pivpn:
+                  ansible_host: "192.168.178.16"
+              children:
+                testserver:
+                  hosts:
+                    ttestserver:
+                      ansible_host: "192.168.178.226"
+                    ttestserver2:
+                      ansible_host: "192.168.178.249"
+
