@@ -10,16 +10,20 @@
             pve_create_vm:
               hosts:
                 ansible:
-                  ansible_host: "192.168.178.17"
+                  ansible_host: "192.168.178.13"
                 pihole:
-                  ansible_host: "192.168.178.15"
+                  ansible_host: "192.168.178.11"
                 pivpn:
-                  ansible_host: "192.168.178.16"
+                  ansible_host: "192.168.178.12"
               children:
                 testserver:
                   hosts:
+                    tansible:
+                      ansible_host: "192.168.178.17"
+                    tpihole:
+                      ansible_host: "192.168.178.15"
+                    tpivpn:
+                      ansible_host: "192.168.178.16"
                     ttestserver:
-                      ansible_host: "192.168.178.226"
                     ttestserver2:
-                      ansible_host: "192.168.178.249"
 
