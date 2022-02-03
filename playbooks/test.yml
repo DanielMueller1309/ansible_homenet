@@ -1,0 +1,27 @@
+---
+  - hosts: localhost
+    pre_tasks:
+      - name: debug hostvars
+        debug:
+          msg: "{{ item }}"
+        with_items: "{{ hostvars }}"
+        register: hostnames
+
+      - name: show hostnames
+        debug:
+          msg: "{{ item }}"
+        with_items: "{{ hostnames }}"
+
+      - name: debug hostnames with groupnames
+        debug:
+          msg: "{{ hostvars[item].ansible_host }}"
+        with_items: "{{ hostvars }}"
+        when: hostvars[item].ansible_host is defined
+
+      - name: outer hostnamen_groupname
+        include_tasks: test_inner.yml
+        with_items: "{{ hostvars }}"
+        loop_control:
+          loop_var: outer_item
+
+

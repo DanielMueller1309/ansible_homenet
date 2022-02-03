@@ -1,0 +1,6 @@
+- name: show debug from inner item
+  debug:
+    msg: "{{ outer_item }}"
+  with_items: "{{ hostvars[outer_item].group_names }}"
+  when: item == 'pve_create_vm'
+
