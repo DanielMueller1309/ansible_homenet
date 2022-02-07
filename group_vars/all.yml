@@ -63,6 +63,7 @@ dotfile_user:
     dotfiles_repo_local_destination: "/home/user/dotfiles"
     dotfiles_home: "/home/user"
     vundle_dest: "/home/user/.vim/bundle/Vundle.vim"
+    vundle_plugins_dest: "/home/user/.vim/bundle/"
     dotfiles_files:
       - .bashrc
       - .tmux.conf
@@ -76,6 +77,7 @@ dotfile_user:
     dotfiles_repo_local_destination: "/root/dotfiles"
     dotfiles_home: "/root"
     vundle_dest: "/root/.vim/bundle/Vundle.vim"
+    vundle_plugins_dest: "/home/root/.vim/bundle/"
     dotfiles_files:
       - .bashrc
       - .tmux.conf
