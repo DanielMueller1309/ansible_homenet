@@ -37,10 +37,17 @@ vms:
     vm_memory: '2048'
     vm_state: 'present'
 
+  - vm_name: 'ansible'
+    vm_vmid: 102
+    vm_ipconfig0: 'ip=192.168.178.13/24,gw=192.168.178.1'
+    vm_memory: '2048'
+    #vm_resize_size: '+8G' # how to resize scsi0 value is like under 'man qm resize' shown
+    vm_state: 'present'
+
   - vm_name: 'tpihole' # name of the vm
     vm_vmid: 201
     vm_ipconfig0: 'ip=192.168.178.15/24,gw=192.168.178.1'
-    vm_state: 'present'
+    vm_state: 'absent'
 
   - vm_name: 'tpivpn'
     vm_vmid: 202
@@ -51,7 +58,7 @@ vms:
     vm_vmid: 203
     vm_ipconfig0: 'ip=192.168.178.17/24,gw=192.168.178.1'
     vm_memory: '2048'
-    vm_resize_size: '+8G' # how to resize scsi0 value is like under 'man qm resize' shown
+    #vm_resize_size: '+8G' # how to resize scsi0 value is like under 'man qm resize' shown
     vm_state: 'absent'
 
   - vm_name: 'ttestserver'
