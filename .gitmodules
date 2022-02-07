@@ -25,3 +25,6 @@
 [submodule "roles/DanielMueller1309.pihole"]
 	path = roles/DanielMueller1309.pihole
 	url = https://github.com/DanielMueller1309/ansible-role-pihole
+[submodule "roles/DanielMueller1309.pivpn"]
+	path = roles/DanielMueller1309.pivpn
+	url = https://github.com/DanielMueller1309/ansible-role-pivpn
