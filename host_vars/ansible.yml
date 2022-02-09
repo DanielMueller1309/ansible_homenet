@@ -1,0 +1,9 @@
+---
+#geerlingguy.pip
+pip_install_packages:
+  - name: bpytop
+  - name: pykeepass
+    version: "3.2.1"
+#mgrote.apt_install_packages
+programs_extra:
+  - sshpass
