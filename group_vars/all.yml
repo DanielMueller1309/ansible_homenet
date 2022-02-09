@@ -96,3 +96,17 @@ dotfile_user:
       - .tmux.conf
       - .gitignore
       - .vimrc
+
+  - username: daniel
+    dotfiles_repo: "https://github.com/DanielMueller1309/dotfiles.git"
+    dotfiles_repo_version: master
+    dotfiles_repo_accept_hostkey: false
+    dotfiles_repo_local_destination: "/home/daniel/dotfiles"
+    dotfiles_home: "/home/daniel"
+    vundle_dest: "/home/daniel/.vim/bundle/Vundle.vim"
+    vundle_plugins_dest: "/home/daniel/.vim/bundle/"
+    dotfiles_files:
+      - .bashrc
+      - .tmux.conf
+      - .gitignore
+      - .vimrc
