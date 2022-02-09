@@ -42,6 +42,7 @@ users:
     user_state: present
     servers:
       - proxmox
+
   - username: user
     password: "{{ lookup('keepass', 'user_hash', 'password') }}" # mkpasswd --method=SHA-512 --stdin
     update_password: always
