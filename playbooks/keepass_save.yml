@@ -1,0 +1,4 @@
+---
+  - hosts: localhost
+    pre_tasks:
+      - name: save data to keepass
