@@ -1,5 +1,6 @@
 ---
   - hosts: ansible
     roles:
+      - { role: mgrote.apt_install_packages, tags: "apt", become: true }
       - { role: geerlingguy.pip, tags: "pip", become: true }
       - { role: geerlingguy.ansible, tags: "ansible", become: true }
