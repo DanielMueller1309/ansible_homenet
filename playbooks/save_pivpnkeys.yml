@@ -1,0 +1,75 @@
+- name: Test the KeePass Module
+  hosts: pivpn
+  tasks:
+  - name: get files from dir.
+    find:
+      path: "/etc/wireguard/keys/"
+    register: datein
+
+  # https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#managing-file-names-and-path-names
+# - name: debug files
+#   debug:
+#     msg: "{{ item.path | basename }}"
+#   with_items: "{{ datein.files }}"
+
+  - name: create database
+    keepass:
+      database: /tmp/vault.kdbx
+      db_password: 'hallowelt'
+      state: create
+
+  - name: Add entry or change existung one
+    keepass:
+      database: /tmp/vault.kdbx
+      db_password: 'hallowelt'
+      title: "{{ item.path | basename }}"
+      state: modify
+    with_items: "{{ datein.files }}"
+    register: keepass_entry
+
+  - name: register keys
+    ansible.builtin.slurp:
+      src: '/etc/wireguard/keys/{{ item.invocation.module_args.title }}'
+    with_items: "{{ keepass_entry.results }}"
+    register: datei_inhalt
+    when: item.invocation.module_args.entry_password == None
+    #no_log: True
+
+  - name: show inhalt all
+    debug:
+      msg:
+      - "{{ item }}"
+      - "Keys from {{ item.item.invocation.module_args.title }}: {{ item.content | b64decode | trim }}"
+    with_items: "{{ datei_inhalt.results }}"
+
+  - name: show inhalt | entry_title and file key befor get keys to file
+    debug:
+      msg:
+      - "{{ item.item.invocation.module_args.title }}"
+      - "{{ item.item.invocation.module_args.entry_password }}"
+    with_items: "{{ datei_inhalt.results }}"
+
+  - name: get keys to pw_file
+    keepass:
+      database: /tmp/vault.kdbx
+      db_password: 'hallowelt'
+      title: "{{ item.item.invocation.module_args.title }}"
+      entry_password: "{{ item.content | b64decode }}"
+      state: modify
+    with_items: "{{ datei_inhalt.results }}"
+    when: item.item.invocation.module_args.entry_password == None
+    register: new_keys
+    no_log: True
+
+  - name: show inhalt | entry_title and file key after get keys to file
+    debug:
+      msg:
+      - "{{ item.invocation.module_args.title }}"
+      - "{{ item.invocation.module_args.entry_password }}"
+    with_items: "{{ new_keys.results }}"
+
+  - name: Store file on ansible host
+    ansible.builtin.fetch:
+      src: /tmp/vault.kdbx
+      dest: /tmp/vault_keypass/
+      flat: yes
