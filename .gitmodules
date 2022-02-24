@@ -28,3 +28,6 @@
 [submodule "roles/DanielMueller1309.pivpn"]
 	path = roles/DanielMueller1309.pivpn
 	url = https://github.com/DanielMueller1309/ansible-role-pivpn
+[submodule "roles/geerlingguy.docker"]
+	path = roles/geerlingguy.docker
+	url = https://github.com/geerlingguy/ansible-role-docker
