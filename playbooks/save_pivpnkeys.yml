@@ -1,9 +1,18 @@
-- name: Test the KeePass Module
+- name: pretasks on ansible host
+  hosts: localhost
+  tasks:
+  - name: create folder
+    ansible.builtin.file:
+      path: /tmp/keypass_database/
+      state: directory
+      mode: '0755'
+
+- name: collect keys in database
   hosts: pivpn
   tasks:
   - name: get files from dir.
     find:
-      path: "/etc/wireguard/keys/"
+      path: "/home/user/keys"
     register: datein
 
   # https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#managing-file-names-and-path-names
@@ -12,64 +21,55 @@
 #     msg: "{{ item.path | basename }}"
 #   with_items: "{{ datein.files }}"
 
-  - name: create database
-    keepass:
-      database: /tmp/vault.kdbx
-      db_password: 'hallowelt'
-      state: create
-
-  - name: Add entry or change existung one
-    keepass:
-      database: /tmp/vault.kdbx
-      db_password: 'hallowelt'
-      title: "{{ item.path | basename }}"
-      state: modify
-    with_items: "{{ datein.files }}"
-    register: keepass_entry
-
   - name: register keys
     ansible.builtin.slurp:
-      src: '/etc/wireguard/keys/{{ item.invocation.module_args.title }}'
-    with_items: "{{ keepass_entry.results }}"
+      src: '/home/user/keys/{{ item.path | basename }}'
+    with_items: "{{ datein.files }}"
     register: datei_inhalt
-    when: item.invocation.module_args.entry_password == None
     #no_log: True
 
-  - name: show inhalt all
-    debug:
-      msg:
-      - "{{ item }}"
-      - "Keys from {{ item.item.invocation.module_args.title }}: {{ item.content | b64decode | trim }}"
-    with_items: "{{ datei_inhalt.results }}"
-
-  - name: show inhalt | entry_title and file key befor get keys to file
-    debug:
-      msg:
-      - "{{ item.item.invocation.module_args.title }}"
-      - "{{ item.item.invocation.module_args.entry_password }}"
-    with_items: "{{ datei_inhalt.results }}"
+  - name: create database
+    keepass:
+     #database: /home/user/keypass_database/vault.kdbx
+     #db_password: "{{ lookup('keepass', 'user', 'password') }}"
+      database: /home/user/keypass_database/vault_wkf.kdbx
+      keyfile: /home/user/keypass_database/vault_keyfile.key
+      state: create
 
   - name: get keys to pw_file
     keepass:
-      database: /tmp/vault.kdbx
-      db_password: 'hallowelt'
-      title: "{{ item.item.invocation.module_args.title }}"
+     #database: /home/user/keypass_database/vault.kdbx
+     #db_password: "{{ lookup('keepass', 'user', 'password') }}"
+      database: /home/user/keypass_database/vault_wkf.kdbx
+      keyfile: /home/user/keypass_database/vault_keyfile.key
+      title: "{{ item.invocation.module_args.src | basename}}"
+      groupname: vpn_keys
       entry_password: "{{ item.content | b64decode }}"
       state: modify
     with_items: "{{ datei_inhalt.results }}"
-    when: item.item.invocation.module_args.entry_password == None
-    register: new_keys
-    no_log: True
+    #no_log: True
 
-  - name: show inhalt | entry_title and file key after get keys to file
-    debug:
-      msg:
-      - "{{ item.invocation.module_args.title }}"
-      - "{{ item.invocation.module_args.entry_password }}"
-    with_items: "{{ new_keys.results }}"
-
-  - name: Store file on ansible host
+  - name: Store db_file on ansible host
     ansible.builtin.fetch:
-      src: /tmp/vault.kdbx
-      dest: /tmp/vault_keypass/
+     #src: /home/user/keypass_database/vault.kdbx
+      src: /home/user/keypass_database/vault_wkf.kdbx
+      dest: /tmp/keypass_database/vault_wkf.kdbx
       flat: yes
+   #become: true
+
+  - name: Store keyfile on ansible host
+    ansible.builtin.fetch:
+      src: /home/user/keypass_database/vault_keyfile.key
+      dest: /tmp/keypass_database/vault_keyfile.key
+      flat: yes
+
+
+#- name: posttasks on ansible host
+#  hosts: localhost
+#  tasks:
+#  - name: merge keyfiles
+#    ansible.builtin.command:
+#      cmd: ""
+#      creates:
+
+
