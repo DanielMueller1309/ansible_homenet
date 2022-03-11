@@ -10,14 +10,14 @@
           state: absent
         when: "'proxmox' in group_names"
     roles:
-      - { role: dp_ausb_md_roles.robertdebock.bootstrap
-, tags: "bootstrap", become: yes}
+      - { role: robertdebock.bootstrap
+, tags: "bootstrap", become: true}
       - { role: ryandaniels.create-users, tags: "user", become: yes}
     vars:
       ### reobertdebock.bootstrap
       bootstrap_user: user
       bootstrap_ansible_user: user
-      bootstrap_wait_for_host: no
+      bootstrap_wait_for_host: false
       bootstrap_timeout: 1
       ### ansible
       ansible_user: "user"
