@@ -7,6 +7,31 @@
       state: directory
       mode: '0755'
 
+  - name: Check file wg_keys in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_db }}"
+    register: wgkeys_tmp_result
+
+  - name: if file wg_keys exist copy to backup (for cheksum check in posttask)
+    ansible.builtin.copy:
+      src: "{{ tmp_path }}{{ wg_keys_db }}"
+      dest: "{{ tmp_path }}{{ wg_keys_db }}.backup"
+      mode: '0755'
+      force: true
+    when: wgkeys_tmp_result.stat.exists
+
+  - name: Check file wg_keys_kf in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_kf }}"
+    register: wgkeys_kf_tmp_result
+
+  - name: if file wg_keys_kf exist copy to backup (for cheksum check in posttask)
+    ansible.builtin.copy:
+      src: "{{ tmp_path }}{{ wg_keys_kf }}"
+      dest: "{{ tmp_path }}{{ wg_keys_kf }}.backup"
+      mode: '0755'
+      force: true
+    when: wgkeys_kf_tmp_result.stat.exists
 - name: collect keys in database
   hosts: pivpn
   tasks:
