@@ -53,6 +53,12 @@
     register: datei_inhalt
     #no_log: True
 
+  - name: create folder for database
+    ansible.builtin.file:
+      path: "{{ home_path }}"
+      state: directory
+      mode: '0755'
+
   - name: create database
     keepass:
      #database: /home/user/keypass_database/vault.kdbx
