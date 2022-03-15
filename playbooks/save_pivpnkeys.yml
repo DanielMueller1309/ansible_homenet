@@ -1,9 +1,10 @@
 - name: pretasks on ansible host
   hosts: localhost
+
   tasks:
   - name: create folder
     ansible.builtin.file:
-      path: /tmp/keypass_database/
+      path: "{{ tmp_path }}"
       state: directory
       mode: '0755'
 
@@ -32,12 +33,13 @@
       mode: '0755'
       force: true
     when: wgkeys_kf_tmp_result.stat.exists
+
 - name: collect keys in database
   hosts: pivpn
   tasks:
   - name: get files from dir.
     find:
-      path: "/home/user/keys"
+      path: "{{ wg_path }}"
     register: datein
 
   # https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#managing-file-names-and-path-names
@@ -48,7 +50,7 @@
 
   - name: register keys
     ansible.builtin.slurp:
-      src: '/home/user/keys/{{ item.path | basename }}'
+      src: '{{ wg_path }}{{ item.path | basename }}'
     with_items: "{{ datein.files }}"
     register: datei_inhalt
     #no_log: True
@@ -61,18 +63,14 @@
 
   - name: create database
     keepass:
-     #database: /home/user/keypass_database/vault.kdbx
-     #db_password: "{{ lookup('keepass', 'user', 'password') }}"
-      database: /home/user/keypass_database/vault_wkf.kdbx
-      keyfile: /home/user/keypass_database/vault_keyfile.key
+      database: "{{ home_path }}{{ wg_keys_db }}"
+      keyfile: "{{ home_path }}{{ wg_keys_kf }}"
       state: create
 
   - name: get keys to pw_file
     keepass:
-     #database: /home/user/keypass_database/vault.kdbx
-     #db_password: "{{ lookup('keepass', 'user', 'password') }}"
-      database: /home/user/keypass_database/vault_wkf.kdbx
-      keyfile: /home/user/keypass_database/vault_keyfile.key
+      database: "{{ home_path }}{{ wg_keys_db }}"
+      keyfile: "{{ home_path }}{{ wg_keys_kf }}"
       title: "{{ item.invocation.module_args.src | basename}}"
       groupname: vpn_keys
       entry_password: "{{ item.content | b64decode }}"
@@ -82,16 +80,16 @@
 
   - name: Store db_file on ansible host
     ansible.builtin.fetch:
-     #src: /home/user/keypass_database/vault.kdbx
-      src: /home/user/keypass_database/vault_wkf.kdbx
-      dest: /tmp/keypass_database/vault_wkf.kdbx
+      src: "{{ home_path }}{{ wg_keys_db }}"
+      dest: "{{ tmp_path }}{{ wg_keys_db }}"
       flat: yes
    #become: true
+    register: getdb
 
   - name: Store keyfile on ansible host
     ansible.builtin.fetch:
-      src: /home/user/keypass_database/vault_keyfile.key
-      dest: /tmp/keypass_database/vault_keyfile.key
+      src: "{{ home_path }}{{ wg_keys_kf }}"
+      dest: "{{ tmp_path }}{{ wg_keys_kf }}"
       flat: yes
 
 - name: posttasks on ansible host
