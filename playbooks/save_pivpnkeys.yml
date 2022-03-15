@@ -94,13 +94,75 @@
       dest: /tmp/keypass_database/vault_keyfile.key
       flat: yes
 
+- name: posttasks on ansible host
+  hosts: localhost
+  tasks:
 
-#- name: posttasks on ansible host
-#  hosts: localhost
-#  tasks:
-#  - name: merge keyfiles
-#    ansible.builtin.command:
-#      cmd: ""
-#      creates:
+  - name: copy database from repo to tmp
+    ansible.builtin.copy:
+      src: /home/daniel/ansible_homenet/homenet_server_db.kdbx
+      dest: "{{ tmp_path }}merged_homenet_server_db.kdbx"
+      mode: '0755'
+      force: true
+    register: db_create
 
+  - name: copy database keyfile from repo to tmp
+    ansible.builtin.copy:
+      src:  "/home/daniel/ansible_homenet/keyfile_homenet.key"
+      dest: "{{ tmp_path }}keyfile_homenet.key"
+      mode: '0755'
+      force: true
+    register: kf_create
+
+  - name: Check file wg_keys in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_db }}"
+    register: wgkeys_tmp_result
+
+  - name: if file wg_keys exist for cheksum check
+    set_fact:
+      wg_db_sha1: "{{ wgkeys_tmp_result.stat.checksum | default() }}"
+
+  - name: Check file wg_keys_backup in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_db }}.backup"
+    register: wgkeys_backup_tmp_result
+
+  - name: if file wg_keys_backup exist for cheksum check
+    set_fact:
+      wg_backup_db_sha1: "{{ wgkeys_backup_tmp_result.stat.checksum | default() }}"
+
+  - name: Check file wg_keys_kf in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_kf }}"
+    register: wgkeys_kf_tmp_result
+
+  - name: if file wg_keys_kf exist for cheksum check
+    set_fact:
+      wg_kf_sha1: "{{ wgkeys_kf_tmp_result.stat.checksum | default() }}"
+
+  - name: Check file wg_keys_kf_backup in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_kf }}.backup"
+    register: wgkeys_kf_backup_tmp_result
+
+  - name: if file wg_keys_kf_backup exist for cheksum check
+    set_fact:
+      wg_backup_kf_sha1: "{{ wgkeys_kf_backup_tmp_result.stat.checksum | default() }}"
+
+  - name: merge keepass file wireguard keys  with merge file
+    ansible.builtin.command:
+      cmd: "keepassxc-cli merge {{ tmp_path }}merged_homenet_server_db.kdbx {{ tmp_path }}{{ wg_keys_db }} -k {{ tmp_path }}keyfile_homenet.key -f {{ tmp_path }}{{ wg_keys_kf }} --no-password --no-password-from"
+    when: wg_db_sha1 != wg_backup_db_sha1 or wg_kf_sha1 != wg_backup_kf_sha1 or db_create.changed or kf_create.changed
+    register: wireguard_keys_merge
+
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ tmp_path }}merged_homenet_server_db.kdbx"
+      dest: /home/daniel/ansible_homenet/homenet_server_db.kdbx
+      owner: daniel
+      group: daniel
+      mode: '0644'
+      force: yes
+    register: copy_file
 
