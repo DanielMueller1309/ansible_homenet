@@ -31,3 +31,9 @@
 [submodule "roles/geerlingguy.docker"]
 	path = roles/geerlingguy.docker
 	url = https://github.com/geerlingguy/ansible-role-docker
+[submodule "roles/geerlingguy.php"]
+	path = roles/geerlingguy.php
+	url = https://github.com/geerlingguy/ansible-role-php
+[submodule "roles/geerlingguy.apache"]
+	path = roles/geerlingguy.apache
+	url = https://github.com/geerlingguy/ansible-role-apache
