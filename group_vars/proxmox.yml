@@ -72,3 +72,17 @@ vms:
     vm_vmid: 205
     vm_nameservers: '192.168.178.15'
     vm_state: 'absent'
+
+  - vm_name: 'kali'
+    vm_vmid: 206
+    vm_nameservers: '192.168.178.15'
+    #source_url:
+    #dest_path:
+    vm_state: 'absent'
+
+  - vm_name: 'docker'
+    vm_vmid: 207
+    vm_nameservers: '192.168.178.15'
+    #source_url:
+    #dest_path:
+    vm_state: 'absent'
