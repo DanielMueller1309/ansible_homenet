@@ -1,0 +1,8 @@
+- hosts: docker
+  vars:
+    pip_install_packages:
+      - docker
+
+  roles:
+    - { role: geerlingguy.pip, become: true}
+    - { role: geerlingguy.docker, become: true}
