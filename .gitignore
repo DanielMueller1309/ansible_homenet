@@ -1,5 +1,5 @@
-./id_rsa
-./vault_password_file
-./.*.sw*
-.*.kdbx
-./.*.key
+../id_rsa
+../vault_password_file
+../.*.sw*
+../.*.kdbx
+../.*.key
