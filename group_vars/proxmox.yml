@@ -45,6 +45,7 @@ vms:
     vm_memory: '2048'
     #vm_resize_size: '+8G' # how to resize scsi0 value is like under 'man qm resize' shown
     vm_state: 'present'
+    vm_nameservers: '192.168.178.11' # ip address of the DNS
 
   - vm_name: 'tpihole' # name of the vm
     vm_vmid: 201
