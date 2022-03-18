@@ -28,9 +28,14 @@ keepass_key: "./keyfile_homenet.key"
 #geerlingguy.ansible
 ansible_install_method: pip
 
+#DanielMueller1309.pihole
+ipv4_address_pihole: 192.168.178.11
+
+
 #geerlingguy.pip
 pip_install_packages:
   - bpytop
+
 #ryandaniels.create-users
 users:
   - username: root
