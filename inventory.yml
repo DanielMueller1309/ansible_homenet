@@ -15,7 +15,14 @@
                   ansible_host: "192.168.178.11"
                 pivpn:
                   ansible_host: "192.168.178.12"
+                docker:
               children:
+                tomoyo:
+                  hosts:
+                    tomoyo1:
+                      ansible_host: "192.168.178.18"
+                    tomoyo2:
+                      ansible_host: "192.168.178.19"
                 testserver:
                   hosts:
                     tansible:
