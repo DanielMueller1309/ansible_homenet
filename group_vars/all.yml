@@ -25,6 +25,7 @@ bootstrap_user: user
 #          6239
 keepass_dbx: "./homenet_server_db.kdbx"
 keepass_key: "./keyfile_homenet.key"
+
 #geerlingguy.ansible
 ansible_install_method: pip
 
@@ -35,6 +36,16 @@ ipv4_address_pihole: 192.168.178.11
 #geerlingguy.pip
 pip_install_packages:
   - bpytop
+  - proxmoxer
+
+#DanielMueller1309.proxmox_snapshot
+vm_api_token_id: 'ci4pve' # the token to use the api
+vm_api_host: 'pve' # hostname of the api host, most same as node
+vm_api_user: 'root@pam' # the token to use the api
+vm_api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
+vm_vmid: ''
+vm_snapname: 'snap-from-ansible'
+vm_timeout: 60
 
 #ryandaniels.create-users
 users:
