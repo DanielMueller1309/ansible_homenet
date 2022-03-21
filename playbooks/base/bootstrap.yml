@@ -10,9 +10,9 @@
           state: absent
         when: "'proxmox' in group_names"
     roles:
-      - { role: robertdebock.bootstrap
-, tags: "bootstrap", become: true}
+      - { role: robertdebock.bootstrap, tags: "bootstrap", become: yes}
       - { role: ryandaniels.create-users, tags: "user", become: yes}
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_bootstrap'}
     vars:
       ### reobertdebock.bootstrap
       bootstrap_user: user
