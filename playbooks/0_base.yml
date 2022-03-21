@@ -5,4 +5,3 @@
   - import_playbook: ./base/qemu_guest_agent.yml
   - import_playbook: ./base/dotfiles.yml
   - import_playbook: ./base/apt_install.yml
-  - import_playbook: ./base/pip.yml

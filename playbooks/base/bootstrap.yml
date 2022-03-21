@@ -1,5 +1,6 @@
 ---
   - hosts: all
+    become: yes
     gather_facts: false
     max_fail_percentage: 20%
     pre_tasks:
@@ -11,6 +12,7 @@
         when: "'proxmox' in group_names"
     roles:
       - { role: robertdebock.bootstrap, tags: "bootstrap", become: yes}
+      - { role: geerlingguy.pip, tags: "pip", become: true }
       - { role: ryandaniels.create-users, tags: "user", become: yes}
       - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_bootstrap'}
     vars:
