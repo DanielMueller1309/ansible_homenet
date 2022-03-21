@@ -2,3 +2,4 @@
   - hosts: all
     roles:
     - { role: ryandaniels.create-users, tags: "user", become: yes}
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_create-users'}

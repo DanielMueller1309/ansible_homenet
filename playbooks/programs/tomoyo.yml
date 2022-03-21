@@ -1,69 +1,84 @@
-- name: install tomyo
-  become: true
-  hosts: tomoyo
-  tasks:
-  - name: install tomoyo
+---
+  - hosts: tomoyo
     become: true
-    ansible.builtin.package:
-      name: "tomoyo-tools"
-      state: present
-    register:  tomoyo_install
+    pre_tasks:
+      - name: install tomoyo
+        become: true
+        ansible.builtin.package:
+          name: "tomoyo-tools"
+          state: present
+        register:  tomoyo_install
 
-  - name: init "/usr/lib/tomoyo/init_policy"
-    become: true
-    command:
-      cmd: "/usr/lib/tomoyo/init_policy"
-    when: tomoyo_install.changed
+      - name: init "/usr/lib/tomoyo/init_policy"
+        become: true
+        command:
+          cmd: "/usr/lib/tomoyo/init_policy"
+        when: tomoyo_install.changed
 
- #- name: add systemd file
- #  file:
- #    path: '/etc/systemd/system/tomoyo-auditd.service'
- #    owner: root
- #    group: root
- #    mode: 0644
- #    state: touch
+ #    - name: add systemd file
+ #      file:
+ #        path: '/etc/systemd/system/tomoyo-auditd.service'
+ #        owner: root
+ #        group: root
+ #        mode: 0644
+ #        state: touch
 
-  - name: add systemd file content
-    blockinfile:
-      path: '/etc/systemd/system/tomoyo-auditd.service'
-      create: true
-      block: |
-        [Unit]
-        Description=TOMOYO Linux Auditing Daemon
+      - name: add systemd file content
+        blockinfile:
+          path: '/etc/systemd/system/tomoyo-auditd.service'
+          create: true
+          block: |
+            [Unit]
+            Description=TOMOYO Linux Auditing Daemon
 
-        [Service]
-        Type=forking
-        ExecStart=/usr/sbin/tomoyo-auditd
-        ExecReload=/bin/kill -HUP $MAINPID
+            [Service]
+            Type=forking
+            ExecStart=/usr/sbin/tomoyo-auditd
+            ExecReload=/bin/kill -HUP $MAINPID
 
-        [Install]
-        WantedBy=multi-user.target
+            [Install]
+            WantedBy=multi-user.target
+        register: systemd_file
+ #    - name: add logrotate file
+ #      file:
+ #        path: '/etc/logrotate.d/tomoyo'
+ #        owner: root
+ #        group: root
+ #        mode: 0644
+ #        state: touch
 
- #- name: add logrotate file
- #  file:
- #    path: '/etc/logrotate.d/tomoyo'
- #    owner: root
- #    group: root
- #    mode: 0644
- #    state: touch
+      - name: add logrotate file
+        blockinfile:
+          path: '/etc/logrotate.d/tomoyo'
+          create: true
+          marker: ''
+          marker_end: ''
+          marker_begin: ''
+          block: |
+            /var/log/tomoyo/*.log {
+              weekly
+              rotate 4
+              nocreate
+            }
+        when: systemd_file.changed
 
-  - name: add systemd file content
-    blockinfile:
-      path: '/etc/logrotate.d/tomoyo'
-      create: true
-      block: |
-        /var/log/tomoyo/*.log {
-          weekly
-          rotate 4
-          nocreate
-        }
+      - name: make tomoyo enable
+        become: true
+        ansible.builtin.systemd:
+          name: tomoyo-auditd
+          enabled: yes
+          masked: no
+          daemon_reload: yes
 
-  - name: reboot
-    reboot:
-      reboot_timeout: 120
+      - name: reboot
+        reboot:
+          reboot_timeout: 120
+        when: tomoyo_install.changed
 
-  - name: make tomoyo run
-    ansible.builtin.systemd:
-      name: tomoyo-auditd
-      state: started
-      enabled: yes
+      - name: make tomoyo run
+        become: true
+        ansible.builtin.systemd:
+          name: tomoyo-auditd
+          state: started
+    roles:
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_tomoyo_install'}
