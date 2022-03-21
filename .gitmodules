@@ -37,3 +37,9 @@
 [submodule "roles/geerlingguy.apache"]
 	path = roles/geerlingguy.apache
 	url = https://github.com/geerlingguy/ansible-role-apache
+[submodule "roles/DanielMueller1309.pve_vm_snapshot"]
+	path = roles/DanielMueller1309.pve_vm_snapshot
+	url = https://github.com/DanielMueller1309/ansible-role-pve-vm-snapshot
+[submodule "roles/DanielMueller1309.proxmox_destroy_vms"]
+	path = roles/DanielMueller1309.proxmox_destroy_vms
+	url = https://github.com/DanielMueller1309/ansible-role-proxmox-destroy-vms
