@@ -94,6 +94,20 @@ users:
       - proxmox
       - ubuntu
 
+# - username: t_user
+#   password: "{{ lookup('keepass', 'user_hash', 'password') }}" # mkpasswd --method=SHA-512 --stdin
+#   update_password: always
+#   groups: ssh, sudo
+#   ssh_key: |
+#     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCYskKuVPHA4T/5iprUlIePZgA6CLEnayXaDzMUkV0Pzo4H0dIEbmKpnMZBVy6LI6wgSpNYvpn+IO+lL84K1w/NqQNh6DmslnQz3ODwo5Mf+hoCwC7HuJ3an+QobHPQ6FNu7+BMBcFRZjbgnpcUDFgco77fihIhqKj+92deU05Q40AmPbQvpHOioFQIFyR84ZsZVn+P4R2Ip1HhHETgHe5trTQI8MSR5UgF9wlAzS1NsWvH3bh+tRdyLyd6dD1ORYsp7aQvcKNUsYni7LgcumCI5IaUECCvaJWDmPGbY9A5kr2D+uxjbJbixGL6qpLTgw2Ygp3MD3+wpO7zbTMZyXAqiIrEmYljCR0cATo7IJF9wTvX5yGHTlED4XqaT9KYPhXpvTlSLPBq6OGTI/LXtLk089g8Tb3HVH5Jgg+7vZkvPQL1RmPgXhreV9uqtry7hsQ6Sp7ffEL8qcuHR4fao5k5ywLLt99xiILZzrg5ABnbrhz8RFXhQD/w+XBsovdjynLHGqH+Y3w3AHbJDq1dQEzQR8IUiLsu+Z1BeCEY0jiRdFKsiFCPzW05tq20hi538xAFSfZTGz65LtCCAdWOBJ7xO1Kp9t3GDLO8wE1e7O60GHOeRzR0PWYypMDVorJ+bUxOu9WFYxrVIWxjU/aThTfZ8BKliTh3nbb0yXb2IbeYww== danie@danie-acer-vm
+#   exclusive_ssh_key: yes
+#   use_sudo: yes
+#   use_sudo_nopass: yes
+#   user_state: present
+#   servers:
+#     - proxmox
+#     - ubuntu
+
 dotfile_user:
   - username: user
     dotfiles_repo: "https://github.com/DanielMueller1309/dotfiles.git"
