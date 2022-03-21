@@ -1,0 +1,5 @@
+---
+  - hosts: webserver
+    gather_facts: false
+  - import_playbook: ../base/php.yml
+  - import_playbook: ../base/apache.yml
