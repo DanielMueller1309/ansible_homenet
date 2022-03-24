@@ -50,17 +50,31 @@
           name: tomoyo-auditd
           enabled: yes
           masked: no
+          force: true
           daemon_reload: yes
+        register: tomoyo_enable
 
       - name: reboot
         reboot:
           reboot_timeout: 120
-        when: tomoyo_install.changed
+        when: tomoyo_enable.changed
 
-      - name: make tomoyo run
+      - name: make tomoyo enable after reboot
+        become: true
+        ansible.builtin.systemd:
+          name: tomoyo-auditd
+          enabled: yes
+          masked: no
+          force: true
+          daemon_reload: yes
+
+      - name: make tomoyo run after reboot
         become: true
         ansible.builtin.systemd:
           name: tomoyo-auditd
           state: started
+          force: true
+          daemon_reload: yes
+
     roles:
-      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_tomoyo_install'}
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_tomoyo_install__{{ now_time }}'}
