@@ -42,7 +42,6 @@
               rotate 4
               nocreate
             }
-        when: systemd_file.changed
 
       - name: make tomoyo enable
         become: true
