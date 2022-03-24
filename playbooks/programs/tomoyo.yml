@@ -36,9 +36,6 @@
         blockinfile:
           path: '/etc/logrotate.d/tomoyo'
           create: true
-          marker: ''
-          marker_end: ''
-          marker_begin: ''
           block: |
             /var/log/tomoyo/*.log {
               weekly
