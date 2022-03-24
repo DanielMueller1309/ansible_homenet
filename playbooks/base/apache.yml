@@ -2,4 +2,4 @@
   become: true
   roles:
     - { role: geerlingguy.apache }
-    - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_apache'}
+    - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_apache__{{ now_time }}'}

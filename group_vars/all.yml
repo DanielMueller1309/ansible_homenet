@@ -45,7 +45,11 @@ vm_api_user: 'root@pam' # the token to use the api
 vm_api_password: "{{ lookup('keepass', 'pveroot', 'password') }}"
 vm_vmid: ''
 vm_snapname: 'snap-from-ansible'
-vm_timeout: 60
+vm_timeout: 300
+
+now_time: "{{ ansible_date_time.hour }}_{{ ansible_date_time.minute }}_{{ ansible_date_time.second }}"
+
+
 
 #ryandaniels.create-users
 users:

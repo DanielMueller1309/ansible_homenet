@@ -3,4 +3,4 @@
     become: yes
     roles:
       - { role: DanielMueller1309.dotfiles_multiuser, tags: dotfiles, become: yes }
-      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_dotfiles'}
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_dotfiles__{{ now_time }}'}

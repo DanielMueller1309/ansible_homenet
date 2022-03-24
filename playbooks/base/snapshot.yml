@@ -2,4 +2,4 @@
   - hosts: all
     become: true
     roles:
-      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}", vm_snapname: 'after_bootstrap'}
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}", vm_snapname: 'snap_from_ansible'}
