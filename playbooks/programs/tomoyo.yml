@@ -15,14 +15,6 @@
           cmd: "/usr/lib/tomoyo/init_policy"
         when: tomoyo_install.changed
 
- #    - name: add systemd file
- #      file:
- #        path: '/etc/systemd/system/tomoyo-auditd.service'
- #        owner: root
- #        group: root
- #        mode: 0644
- #        state: touch
-
       - name: add systemd file content
         blockinfile:
           path: '/etc/systemd/system/tomoyo-auditd.service'
@@ -39,13 +31,6 @@
             [Install]
             WantedBy=multi-user.target
         register: systemd_file
- #    - name: add logrotate file
- #      file:
- #        path: '/etc/logrotate.d/tomoyo'
- #        owner: root
- #        group: root
- #        mode: 0644
- #        state: touch
 
       - name: add logrotate file
         blockinfile:
