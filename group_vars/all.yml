@@ -33,7 +33,10 @@ ansible_install_method: pip
 ipv4_address_pihole: 192.168.178.11
 
 
-#geerlingguy.pip
+#geerlingguy.ntp
+ntp_timezone: Europe/Berlin
+
+#geerlingguy.pip:
 pip_install_packages:
   - bpytop
   - proxmoxer
