@@ -17,15 +17,6 @@
                   ansible_host: "192.168.178.12"
                 docker:
               children:
-                webserver:
-                  children:
-                    tomoyo:
-                      hosts:
-                        tomoyo1:
-                          ansible_host: "192.168.178.18"
-                        tomoyo2:
-                          ansible_host: "192.168.178.19"
-                        tomoyo3:
                #testserver:
                #  hosts:
                #    tansible:
