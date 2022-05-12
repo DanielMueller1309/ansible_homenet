@@ -1,0 +1,5 @@
+---
+  - hosts: all
+    roles:
+      - { role: geerlingguy.ntp, tags: "ntp", become: true }
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}", vm_snapname: 'after_ntp__{{ now_time }}'}
