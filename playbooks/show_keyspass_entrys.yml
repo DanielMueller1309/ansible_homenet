@@ -1,0 +1,18 @@
+---
+  - hosts: localhost
+    pre_tasks:
+      - name: debug keepass entry
+        debug:
+          msg: "{{ item }}"
+        with_items:
+          passwort: "{{ lookup('keepass', 'Honer10_pub', 'password') }}"
+    vars:
+      #feePass password (ansible-vault encrypt_string <password>)
+      keepass_dbx: "./vault.kdbx"
+      keepass_psw: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                34666534366237326237316531353234383163386665623335316265623363333564666131396531
+                3534323564633164386135346663333834343931336135320a303237393138356437373562313838
+                61366261653034323638363634376639376661393965323961303339303130613436366165663638
+                3331666135643033620a636230306538363537323261363130323138363164356132313732333931
+                3564

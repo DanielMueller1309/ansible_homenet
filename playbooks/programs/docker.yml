@@ -1,0 +1,9 @@
+- hosts: docker
+  vars:
+    pip_install_packages:
+      - docker
+
+  roles:
+    - { role: geerlingguy.pip, become: true}
+    - { role: geerlingguy.docker, become: true}
+    - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_docker'}

@@ -1,0 +1,5 @@
+- hosts: webserver
+  become: true
+  roles:
+    - { role: geerlingguy.php }
+    - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_php__{{ now_time }}'}

@@ -1,0 +1,4 @@
+---
+  - hosts: pve
+    roles:
+      - { role: DanielMueller1309.proxmox_destroy_vms, tags: "create_vms", become: yes}

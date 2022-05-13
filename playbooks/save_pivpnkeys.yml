@@ -1,0 +1,166 @@
+- name: pretasks on ansible host
+  hosts: localhost
+
+  tasks:
+  - name: create folder
+    ansible.builtin.file:
+      path: "{{ tmp_path }}"
+      state: directory
+      mode: '0755'
+
+  - name: Check file wg_keys in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_db }}"
+    register: wgkeys_tmp_result
+
+  - name: if file wg_keys exist copy to backup (for cheksum check in posttask)
+    ansible.builtin.copy:
+      src: "{{ tmp_path }}{{ wg_keys_db }}"
+      dest: "{{ tmp_path }}{{ wg_keys_db }}.backup"
+      mode: '0755'
+      force: true
+    when: wgkeys_tmp_result.stat.exists
+
+  - name: Check file wg_keys_kf in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_kf }}"
+    register: wgkeys_kf_tmp_result
+
+  - name: if file wg_keys_kf exist copy to backup (for cheksum check in posttask)
+    ansible.builtin.copy:
+      src: "{{ tmp_path }}{{ wg_keys_kf }}"
+      dest: "{{ tmp_path }}{{ wg_keys_kf }}.backup"
+      mode: '0755'
+      force: true
+    when: wgkeys_kf_tmp_result.stat.exists
+
+- name: collect keys in database
+  hosts: pivpn
+  tasks:
+  - name: get files from dir.
+    find:
+      path: "{{ wg_path }}"
+    register: datein
+
+  # https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#managing-file-names-and-path-names
+# - name: debug files
+#   debug:
+#     msg: "{{ item.path | basename }}"
+#   with_items: "{{ datein.files }}"
+
+  - name: register keys
+    ansible.builtin.slurp:
+      src: '{{ wg_path }}{{ item.path | basename }}'
+    with_items: "{{ datein.files }}"
+    register: datei_inhalt
+    #no_log: True
+
+  - name: create folder for database
+    ansible.builtin.file:
+      path: "{{ home_path }}"
+      state: directory
+      mode: '0755'
+
+  - name: create database
+    keepass:
+      database: "{{ home_path }}{{ wg_keys_db }}"
+      keyfile: "{{ home_path }}{{ wg_keys_kf }}"
+      state: create
+
+  - name: get keys to pw_file
+    keepass:
+      database: "{{ home_path }}{{ wg_keys_db }}"
+      keyfile: "{{ home_path }}{{ wg_keys_kf }}"
+      title: "{{ item.invocation.module_args.src | basename}}"
+      groupname: vpn_keys
+      entry_password: "{{ item.content | b64decode }}"
+      state: modify
+    with_items: "{{ datei_inhalt.results }}"
+    #no_log: True
+
+  - name: Store db_file on ansible host
+    ansible.builtin.fetch:
+      src: "{{ home_path }}{{ wg_keys_db }}"
+      dest: "{{ tmp_path }}{{ wg_keys_db }}"
+      flat: yes
+   #become: true
+    register: getdb
+
+  - name: Store keyfile on ansible host
+    ansible.builtin.fetch:
+      src: "{{ home_path }}{{ wg_keys_kf }}"
+      dest: "{{ tmp_path }}{{ wg_keys_kf }}"
+      flat: yes
+
+- name: posttasks on ansible host
+  hosts: localhost
+  tasks:
+
+  - name: copy database from repo to tmp
+    ansible.builtin.copy:
+      src: /home/daniel/ansible_homenet/homenet_server_db.kdbx
+      dest: "{{ tmp_path }}merged_homenet_server_db.kdbx"
+      mode: '0755'
+      force: true
+    register: db_create
+
+  - name: copy database keyfile from repo to tmp
+    ansible.builtin.copy:
+      src:  "/home/daniel/ansible_homenet/keyfile_homenet.key"
+      dest: "{{ tmp_path }}keyfile_homenet.key"
+      mode: '0755'
+      force: true
+    register: kf_create
+
+  - name: Check file wg_keys in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_db }}"
+    register: wgkeys_tmp_result
+
+  - name: if file wg_keys exist for cheksum check
+    set_fact:
+      wg_db_sha1: "{{ wgkeys_tmp_result.stat.checksum | default() }}"
+
+  - name: Check file wg_keys_backup in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_db }}.backup"
+    register: wgkeys_backup_tmp_result
+
+  - name: if file wg_keys_backup exist for cheksum check
+    set_fact:
+      wg_backup_db_sha1: "{{ wgkeys_backup_tmp_result.stat.checksum | default() }}"
+
+  - name: Check file wg_keys_kf in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_kf }}"
+    register: wgkeys_kf_tmp_result
+
+  - name: if file wg_keys_kf exist for cheksum check
+    set_fact:
+      wg_kf_sha1: "{{ wgkeys_kf_tmp_result.stat.checksum | default() }}"
+
+  - name: Check file wg_keys_kf_backup in tmp
+    stat:
+      path: "{{ tmp_path }}{{ wg_keys_kf }}.backup"
+    register: wgkeys_kf_backup_tmp_result
+
+  - name: if file wg_keys_kf_backup exist for cheksum check
+    set_fact:
+      wg_backup_kf_sha1: "{{ wgkeys_kf_backup_tmp_result.stat.checksum | default() }}"
+
+  - name: merge keepass file wireguard keys  with merge file
+    ansible.builtin.command:
+      cmd: "keepassxc-cli merge {{ tmp_path }}merged_homenet_server_db.kdbx {{ tmp_path }}{{ wg_keys_db }} -k {{ tmp_path }}keyfile_homenet.key -f {{ tmp_path }}{{ wg_keys_kf }} --no-password --no-password-from"
+    when: wg_db_sha1 != wg_backup_db_sha1 or wg_kf_sha1 != wg_backup_kf_sha1 or db_create.changed or kf_create.changed
+    register: wireguard_keys_merge
+
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: "{{ tmp_path }}merged_homenet_server_db.kdbx"
+      dest: /home/daniel/ansible_homenet/homenet_server_db.kdbx
+      owner: daniel
+      group: daniel
+      mode: '0644'
+      force: yes
+    register: copy_file
+

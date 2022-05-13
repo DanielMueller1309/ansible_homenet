@@ -1,0 +1,8 @@
+---
+  - hosts: all
+    gather_facts: false
+  - import_playbook: ./base/bootstrap.yml
+  - import_playbook: ./base/qemu_guest_agent.yml
+  - import_playbook: ./base/ntp.yml
+  - import_playbook: ./base/dotfiles.yml
+  - import_playbook: ./base/apt_install.yml

@@ -1,0 +1,4 @@
+---
+  - hosts: pve
+    roles:
+      - { role: proxmox_create_vms, tags: "create_vms", become: yes}

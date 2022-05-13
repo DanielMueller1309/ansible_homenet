@@ -1,0 +1,7 @@
+---
+  - hosts: ansible
+    roles:
+      - { role: mgrote.apt_install_packages, tags: "apt", become: true }
+      - { role: geerlingguy.pip, tags: "pip", become: true }
+      - { role: geerlingguy.ansible, tags: "ansible", become: true }
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_ansible_install'}

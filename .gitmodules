@@ -1,0 +1,48 @@
+[submodule "roles/--force"]
+	path = roles/--force
+	url = https://github.com/DanielMueller1309/proxmox_create_vms
+[submodule "roles/proxmox_create_vms"]
+	path = roles/proxmox_create_vms
+	url = https://github.com/DanielMueller1309/proxmox_create_vms
+[submodule "roles/geerlingguy.pip"]
+	path = roles/geerlingguy.pip
+	url = https://github.com/geerlingguy/ansible-role-pip
+[submodule "roles/geerlingguy.ansible"]
+	path = roles/geerlingguy.ansible
+	url = https://github.com/geerlingguy/ansible-role-ansible
+[submodule "roles/robertdebock.bootstrap"]
+	path = roles/robertdebock.bootstrap
+	url = https://github.com/robertdebock/ansible-role-bootstrap
+[submodule "roles/ryandaniels.create-users"]
+	path = roles/ryandaniels.create-users
+	url = https://github.com/ryandaniels/ansible-role-create-users
+[submodule "roles/philippwaller.bootstrap"]
+	path = roles/philippwaller.bootstrap
+	url = https://github.com/philippwaller/ansible-role-bootstrap/
+[submodule "roles/DanielMueller1309.dotfiles_multiuser"]
+	path = roles/DanielMueller1309.dotfiles_multiuser
+	url = https://github.com/DanielMueller1309/ansible-role-dotfiles_multiuser
+[submodule "roles/DanielMueller1309.pihole"]
+	path = roles/DanielMueller1309.pihole
+	url = https://github.com/DanielMueller1309/ansible-role-pihole
+[submodule "roles/DanielMueller1309.pivpn"]
+	path = roles/DanielMueller1309.pivpn
+	url = https://github.com/DanielMueller1309/ansible-role-pivpn
+[submodule "roles/geerlingguy.docker"]
+	path = roles/geerlingguy.docker
+	url = https://github.com/geerlingguy/ansible-role-docker
+[submodule "roles/geerlingguy.php"]
+	path = roles/geerlingguy.php
+	url = https://github.com/geerlingguy/ansible-role-php
+[submodule "roles/geerlingguy.apache"]
+	path = roles/geerlingguy.apache
+	url = https://github.com/geerlingguy/ansible-role-apache
+[submodule "roles/DanielMueller1309.pve_vm_snapshot"]
+	path = roles/DanielMueller1309.pve_vm_snapshot
+	url = https://github.com/DanielMueller1309/ansible-role-pve-vm-snapshot
+[submodule "roles/DanielMueller1309.proxmox_destroy_vms"]
+	path = roles/DanielMueller1309.proxmox_destroy_vms
+	url = https://github.com/DanielMueller1309/ansible-role-proxmox-destroy-vms
+[submodule "roles/geerlingguy.ntp"]
+	path = roles/geerlingguy.ntp
+	url = https://github.com/geerlingguy/ansible-role-ntp

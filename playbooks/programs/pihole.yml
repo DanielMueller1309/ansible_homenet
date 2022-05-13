@@ -1,0 +1,5 @@
+---
+  - hosts: pihole
+    roles:
+      - { role: DanielMueller1309.pihole, tags: "qemu_gu", become: true }
+      - { role: DanielMueller1309.pve_vm_snapshot, tags: "snapshot", vm_hostname: "{{ inventory_hostname }}" , vm_snapname: 'after_pihole'}
