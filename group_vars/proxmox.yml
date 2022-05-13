@@ -64,19 +64,3 @@ vms:
 #   #vm_resize_size: '+8G' # how to resize scsi0 value is like under 'man qm resize' shown
 #   vm_state: 'absent'
 
-  - vm_name: 'tomoyo1'
-    vm_vmid: 301
-    vm_ipconfig0: 'ip=192.168.178.18/24,gw=192.168.178.1'
-    vm_memory: '2048'
-    vm_state: 'present'
-
-  - vm_name: 'tomoyo2'
-    vm_vmid: 302
-    vm_ipconfig0: 'ip=192.168.178.19/24,gw=192.168.178.1'
-    vm_memory: '2048'
-    vm_state: 'present'
-
-  - vm_name: 'tomoyo3'
-    vm_vmid: 303
-    vm_memory: '2048'
-    vm_state: 'present'
