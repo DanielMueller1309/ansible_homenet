@@ -1,0 +1,27 @@
+- name: create_vm
+  hosts: pve
+  tasks:
+    - name: Apply tags to tasks within included file
+      include_role:
+        name:  proxmox_create_vms
+        apply:
+          tags:
+            - create_vms
+          become:  true
+#   - name: get infos of MAC
+#     lineinfile:
+#       path: "/etc/pve/qemu-server/{{  }}"
+#       search_string: '127.0.0.1'
+#- name: update dhcplease
+#  become: true
+#  hosts: pihole
+#  tasks:
+#    - name: entferne client dhcplease
+#      lineinfile:
+#      path: /etc/pihole/dhcp.leases
+#      search_string: ''
+#      line: 127.0.0.1 localhost
+#      owner: root
+#      group: root
+#      mode: '0644'
+#      state: absent
