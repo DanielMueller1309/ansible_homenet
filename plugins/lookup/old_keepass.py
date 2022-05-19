@@ -87,10 +87,11 @@ class LookupModule(LookupBase):
                 LookupModule.keepass = PyKeePass(kp_dbx, kp_psw, kp_key)
            #entry = LookupModule.keepass.\
            #    find_entries_by_path(entry_path, first=True, regex=True)
-            entrie_arr = entry_path.rsplit('/', 1)
-            display.vv(u"entrie_arr: " % entrie_arr)
-            group_path=entrie_arr[0])
-            entrie_path=entrie_arr[0])
+            entrie_arr = terms[0].strip('/').rsplit('/', 1)
+            display.vv(u"entrie_arr(0): " + str(entrie_arr[0]))
+            group_path=str(entrie_arr[0])
+            entrie_path=str(entrie_arr)
+            display.vv(u"entrie_arr(): " + entrie_path)
             group =  LookupModule.keepass.find_groups(name=group_path, first=True)
             entry = LookupModule.keepass.find_entries(title='.*', group=group_path, first=True, regex=True)
             if entry is None:
