@@ -85,6 +85,8 @@ class LookupModule(LookupBase):
         try:
             if not LookupModule.keepass:
                 LookupModule.keepass = PyKeePass(kp_dbx, kp_psw, kp_key)
+           #entry = LookupModule.keepass.\
+           #    find_entries_by_path(entry_path, first=True, regex=True)
             entrie_arr = entry_path.rsplit('/', 1)
             display.vv(u"entrie_arr: " % entrie_arr)
             group_path=entrie_arr[0])
