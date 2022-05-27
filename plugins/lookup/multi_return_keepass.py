@@ -96,7 +96,7 @@ class KeePass(object):
         elif field == 'uuid':
             params['uuid'] = uuid.UUID(value)
         elif field == 'tags':
-            params['tags'] = [value]
+            params['tags'] = value
         elif fild == 'group':
             param['group'] =  self._db.find_groups(value, first=True, regex=True)
         elif field == 'custom':
