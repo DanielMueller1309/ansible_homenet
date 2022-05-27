@@ -74,6 +74,7 @@
       title: "{{ item.invocation.module_args.src | basename}}"
       groupname: vpn_keys
       entry_password: "{{ item.content | trim | b64decode }}"
+      tags: "vpnkeys"
       state: modify
     with_items: "{{ datei_inhalt.results }}"
     #no_log: True
