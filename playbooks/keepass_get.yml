@@ -1,0 +1,11 @@
+---
+  - hosts: localhost
+    pre_tasks:
+      - name: Retrieve entries by title
+        debug:
+          var: lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')
+          #lookup('keepass', 'vpnkeys', search='tags')
+          #
+          #
+
+
