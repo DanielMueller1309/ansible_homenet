@@ -26,6 +26,10 @@ bootstrap_user: user
 keepass_dbx: "./homenet_server_db.kdbx"
 keepass_key: "./keyfile_homenet.key"
 
+#multi keepass
+keepass_db_file: "./homenet_server_db.kdbx"
+keepass_key_file: "./keyfile_homenet.key"
+
 #geerlingguy.ansible
 ansible_install_method: pip
 
