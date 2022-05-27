@@ -73,7 +73,7 @@
       keyfile: "{{ home_path }}{{ wg_keys_kf }}"
       title: "{{ item.invocation.module_args.src | basename}}"
       groupname: vpn_keys
-      entry_password: "{{ item.content | b64decode }}"
+      entry_password: "{{ item.content | trim | b64decode }}"
       state: modify
     with_items: "{{ datei_inhalt.results }}"
     #no_log: True
