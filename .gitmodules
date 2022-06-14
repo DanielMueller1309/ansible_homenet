@@ -46,3 +46,6 @@
 [submodule "roles/reallyenglish.apt-repo"]
 	path = roles/reallyenglish.apt-repo
 	url = https://github.com/reallyenglish/ansible-role-apt-repo
+[submodule "roles/DanielMueller1309.apt-repo"]
+	path = roles/DanielMueller1309.apt-repo
+	url = https://github.com/DanielMueller1309/apt-repo/
