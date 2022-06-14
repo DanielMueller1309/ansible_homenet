@@ -1,0 +1,25 @@
+programs_extra:
+  - brave-browser
+  - git
+  - vim
+  - keepassxc
+  - ssh
+  - wireguard
+  - signal-desktop
+  - keepassxc
+  - virtualbox
+  - tmux
+repo_keys:
+  - "https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/Release.key"
+repo_links:
+  - 'deb https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/ ./'
+ansible_ssh_user: "danie"
+ansible_user: "danie"
+ansible_password: "{{ lookup('keepass', 'daniel', 'password') }}"
+ansible_become_password: "{{ lookup('keepass', 'daniel', 'password') }}"
+bootstrap_user: danie
+ansible_distro: 'Debian'
+
+# apt repo role vars
+apt_repo_enable_apt_transport_https: True
+
