@@ -6,6 +6,10 @@
           pve:
             ansible_host: "192.168.178.10"
       ubuntu:
+        hosts:
+          localhost:
+            ansible_host: "127.0.0.1"
+          acer5: ''
         children:
             pve_create_vm:
               hosts:
