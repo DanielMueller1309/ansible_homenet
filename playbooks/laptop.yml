@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  tasks:
+    - name: add keys and repos
+      include_role:
+        name: DanielMueller1309.apt-repo
+
+    - name: add programms
+      include_role:
+        name: mgrote.apt_install_packages
+  vars:
+    apt_repo:
+      - repo_name: 'onedrive'
+        repo_link: 'deb https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/ ./'
+        repo_key: "https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/Release.key"
+        repo_keyring: ''
+
+      - repo_name: "brave"
+        repo_link:  "deb https://brave-browser-apt-release.s3.brave.com/ stable main"
+        repo_key: "https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg"
+        repo_keyring: '/usr/share/keyrings/brave-browser-archive-keyring.gpg'
+
+      - repo_name: 'signal'
+        repo_link: 'deb https://updates.signal.org/desktop/apt xenial main'
+        repo_key: "https://updates.signal.org/desktop/apt/keys.asc"
+        repo_keyring: '/usr/share/keyrings/signal-desktop-keyring.gpg'
+
