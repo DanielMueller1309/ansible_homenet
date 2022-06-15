@@ -15,6 +15,8 @@
         name: DanielMueller1309.dotfiles_multiuser
   vars:
     ansible_ssh_user: "danie"
+    ansible_ssh_pass: "{{ lookup('keepass', danie', 'password') }}"
+
     ansible_user: "danie"
     ansible_password: "{{ lookup('keepass', 'daniel', 'password') }}"
     ansible_become_password: "{{ lookup('keepass', 'daniel', 'password') }}"
