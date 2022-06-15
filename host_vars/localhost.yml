@@ -9,6 +9,8 @@ programs_extra:
   - keepassxc
   - virtualbox
   - tmux
+  - resolvconf
+  - expect
 repo_keys:
   - "https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/Release.key"
 repo_links:
