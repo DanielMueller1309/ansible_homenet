@@ -8,6 +8,10 @@
     - name: add programms
       include_role:
         name: mgrote.apt_install_packages
+
+    - name: add dotfiles
+      include_role:
+        name: DanielMueller1309.dotfiles_multiuser
   vars:
     apt_repo:
       - repo_name: 'onedrive'
