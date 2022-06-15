@@ -13,6 +13,12 @@
       include_role:
         name: DanielMueller1309.dotfiles_multiuser
   vars:
+    ansible_ssh_user: "danie"
+    ansible_user: "danie"
+    ansible_password: "{{ lookup('keepass', 'daniel', 'password') }}"
+    ansible_become_password: "{{ lookup('keepass', 'daniel', 'password') }}"
+    bootstrap_user: danie
+    ansible_distro: 'Debian'
     apt_repo:
       - repo_name: 'onedrive'
         repo_link: 'deb https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/ ./'
