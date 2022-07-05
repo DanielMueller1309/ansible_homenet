@@ -3,3 +3,4 @@
 ../.*.sw*
 ../.*.kdbx
 ../.*.key
+plugins/lookup/__pycache__/
