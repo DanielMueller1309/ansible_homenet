@@ -37,23 +37,34 @@
 - name: collect keys in database
   hosts: pivpn
   tasks:
-  - name: get files from dir.
+  - name: get key files from dir
     find:
-      path: "{{ wg_path }}"
-    register: datein
+      path: "{{ wg_path }}/keys/"
+    register: key_files
 
   # https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#managing-file-names-and-path-names
 # - name: debug files
 #   debug:
 #     msg: "{{ item.path | basename }}"
-#   with_items: "{{ datein.files }}"
+#   with_items: "{{ key_files.files }}"
 
-  - name: register keys
+  - name: register key files value
     ansible.builtin.slurp:
-      src: '{{ wg_path }}{{ item.path | basename }}'
-    with_items: "{{ datein.files }}"
-    register: datei_inhalt
+      src: '{{ wg_path }}/keys/{{ item.path | basename }}'
+    with_items: "{{ key_files.files }}"
+    register: key_file_value
     #no_log: True
+
+  - name: get config-files from dir
+    find:
+      path: "{{ wg_path }}/configs/"
+    register: config_file
+
+  - name: register config files value
+    ansible.builtin.slurp:
+      src: '{{ wg_path }}/configs/{{ item.path | basename }}'
+    with_items: "{{ config_file.files }}"
+    register: config_file_value
 
   - name: create folder for database
     ansible.builtin.file:
@@ -76,8 +87,19 @@
       entry_password: "{{ item.content | trim | b64decode }}"
       tags: "vpnkeys"
       state: modify
-    with_items: "{{ datei_inhalt.results }}"
+    with_items: "{{ key_file_value.results }}"
     #no_log: True
+
+  - name: get get conf file values to pw_file
+    keepass:
+      database: "{{ home_path }}{{ wg_keys_db }}"
+      keyfile: "{{ home_path }}{{ wg_keys_kf }}"
+      title: "{{ item.invocation.module_args.src | basename}}"
+      groupname: vpn_configs
+      notes: "{{ item.content | b64decode }}"
+      tags: "vpnconfigs"
+      state: modify
+    with_items: "{{ key_file_value.results }}"
 
   - name: Store db_file on ansible host
     ansible.builtin.fetch:

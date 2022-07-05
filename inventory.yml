@@ -21,12 +21,12 @@
                   ansible_host: "192.168.178.12"
                 docker:
               children:
-               #testserver:
-               #  hosts:
-               #    tansible:
-               #      ansible_host: "192.168.178.17"
+                testserver:
+                  hosts:
+                    tansible:
+                      ansible_host: "192.168.178.17"
                #    tpihole:
                #      ansible_host: "192.168.178.15"
-               #    tpivpn:
-               #      ansible_host: "192.168.178.16"
+                    tpivpn:
+                      ansible_host: "192.168.178.16"
 
