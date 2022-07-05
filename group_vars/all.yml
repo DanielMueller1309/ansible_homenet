@@ -168,6 +168,6 @@ dotfile_user:
 tmp_path: '/tmp/keepass_database/'
 wg_keys_db: 'wg_keys_wkf.kdbx'
 wg_keys_kf: 'keyfile_wg_keys.key'
-wg_path: '/etc/wireguard/keys/'
+wg_path: '/etc/wireguard'
 home_path: '/home/user/keepass_database/'
 home_path_daniel: '/home/daniel/keepass_database/'
