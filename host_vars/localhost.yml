@@ -26,3 +26,31 @@ ansible_distro: 'Debian'
 # apt repo role vars
 apt_repo_enable_apt_transport_https: True
 
+dotfile_user:
+  - username: daniel
+    dotfiles_repo: "https://github.com/DanielMueller1309/dotfiles.git"
+    dotfiles_repo_version: master
+    dotfiles_repo_accept_hostkey: false
+    dotfiles_repo_local_destination: "/home/daniel/dotfiles"
+    dotfiles_home: "/home/daniel"
+    vundle_dest: "/home/daniel/.vim/bundle/Vundle.vim"
+    vundle_plugins_dest: "/home/daniel/.vim/bundle/"
+    dotfiles_files:
+      - .bashrc
+      - .tmux.conf
+      - .gitignore
+      - .vimrc
+
+  - username: root
+    dotfiles_repo: "https://github.com/DanielMueller1309/dotfiles.git"
+    dotfiles_repo_version: master
+    dotfiles_repo_accept_hostkey: false
+    dotfiles_repo_local_destination: "/root/dotfiles"
+    dotfiles_home: "/root"
+    vundle_dest: "/root/.vim/bundle/Vundle.vim"
+    vundle_plugins_dest: "/home/root/.vim/bundle/"
+    dotfiles_files:
+      - .bashrc
+      - .tmux.conf
+      - .gitignore
+      - .vimrc
