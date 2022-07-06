@@ -15,9 +15,9 @@ repo_keys:
   - "https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/Release.key"
 repo_links:
   - 'deb https://download.opensuse.org/repositories/home:/npreining:/debian-ubuntu-onedrive/xUbuntu_20.04/ ./'
-ansible_ssh_user: "danie"
-ansible_ssh_pass: "{{ lookup('keepass', danie', 'password') }}"
-ansible_user: "danie"
+ansible_ssh_user: "daniel"
+ansible_ssh_pass: "{{ lookup('keepass', 'daniel', 'password') }}"
+ansible_user: "daniel"
 ansible_password: "{{ lookup('keepass', 'daniel', 'password') }}"
 ansible_become_password: "{{ lookup('keepass', 'daniel', 'password') }}"
 bootstrap_user: danie
