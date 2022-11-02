@@ -1,6 +1,6 @@
 ../id_rsa
 ../vault_password_file
-../.*.sw.*
+./*.swp
 ../.*.kdbx
 ../.*.key
 plugins/lookup/__pycache__/
