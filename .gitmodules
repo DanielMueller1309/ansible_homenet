@@ -31,9 +31,6 @@
 [submodule "roles/geerlingguy.docker"]
 	path = roles/geerlingguy.docker
 	url = https://github.com/geerlingguy/ansible-role-docker
-[submodule "roles/geerlingguy.php"]
-	path = roles/geerlingguy.php
-	url = https://github.com/geerlingguy/ansible-role-php
 [submodule "roles/geerlingguy.apache"]
 	path = roles/geerlingguy.apache
 	url = https://github.com/geerlingguy/ansible-role-apache
@@ -46,3 +43,9 @@
 [submodule "roles/geerlingguy.ntp"]
 	path = roles/geerlingguy.ntp
 	url = https://github.com/geerlingguy/ansible-role-ntp
+[submodule "roles/reallyenglish.apt-repo"]
+	path = roles/reallyenglish.apt-repo
+	url = https://github.com/reallyenglish/ansible-role-apt-repo
+[submodule "roles/DanielMueller1309.apt-repo"]
+	path = roles/DanielMueller1309.apt-repo
+	url = https://github.com/DanielMueller1309/apt-repo/
