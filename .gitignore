@@ -6,3 +6,4 @@
 ../.*.key
 plugins/lookup/__pycache__/
 *.kdbx
+*.key
