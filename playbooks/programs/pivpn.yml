@@ -1,0 +1,43 @@
+---
+  - hosts: localhost
+    pre_tasks:
+     #- name: check if keepassxc-cli is available
+     #  package:
+     #    name: keepassxc
+     #    state: present
+
+     #- name: load entrys with command
+     #  command:
+     #    cmd: "keepassxc-cli ls --key-file {{ keepass_key }} --no-password {{ keepass_dbx }} vpn_keys/"
+     #  register: entrys_from_keepass
+
+     #- name: debug entrys
+     #  debug:
+     #    msg: "{{ item }}"
+     #  with_items: "{{ entrys_from_keepass.stdout }}"
+
+    # - name: Retrieve entries by title
+    #   debug:
+    #     msg: "{{ item }}"
+    #   with_items:
+    #     - "lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')"
+
+    # - name: create dict list variable
+    #   set_fact:
+    #     keys: lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')
+
+    # - name: debug entrys
+    #   debug:
+    #     msg: "lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')"
+    # - name: Retrieve entries by title
+    #   debug:
+    #     var: lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')
+    #
+      - name: Retrieve entries by title
+        debug:
+          var: "{{ item | regex_search(title, multiline=True, ignorecase=True) }}"
+        with_items:
+          - lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')
+
+     #  with_items:
+     #    - lookup('multi_return_keepass', {{ ['vpnkeys'] }}, search='tags')
